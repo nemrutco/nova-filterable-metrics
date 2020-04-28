@@ -1,17 +1,9 @@
 <template>
   <loading-card :loading="loading" class="px-6 py-4">
     <h3 class="flex mb-3 text-base text-80 font-bold">
-      <template v-if="url">
-        <router-link
-          tag="a"
-          :to="JSON.parse(url)"
-          :title="title"
-          class="cursor-pointer text-primary dim no-underline"
-        >{{ title }}</router-link>
-      </template>
-      <template v-else>{{ title }}</template>
+      {{ title }}
       <span
-        class="mr-auto ml-2 font-semibold text-70 text-base"
+        class="ml-auto font-semibold text-70 text-sm"
       >({{ formattedTotal }} {{ __('total') }})</span>
       <button class="ml-auto text-80 btn btn-white" v-if="filters.length > 0" @click="openModal">
         <svg
@@ -46,8 +38,8 @@
     </div>
 
     <div class="overflow-hidden overflow-y-auto max-h-90px">
-      <ul class="list-reset flex flex-wrap" :class="{'flex-col' : wrap}">
-        <li v-for="item in formattedItems" class="text-xs text-80 leading-normal w-1/2">
+      <ul class="list-reset">
+        <li v-for="item in formattedItems" class="text-xs text-80 leading-normal">
           <span
             class="inline-block rounded-full w-2 h-2 mr-2"
             :style="{
@@ -62,7 +54,13 @@
     <div
       ref="chart"
       :class="chartClasses"
-      style="width: 90px; height: 90px; right: 20px; bottom: 30px; top: calc(50% + 15px);"
+      style="
+        width: 90px;
+        height: 90px;
+        right: 20px;
+        bottom: 30px;
+        top: calc(50% + 15px);
+      "
     />
 
     <filterable-modal
@@ -81,13 +79,6 @@ import PartitionMetric from "@/components/Metrics/Base/PartitionMetric";
 
 export default {
   extends: PartitionMetric,
-
-  props: {
-    wrap: {
-      type: Boolean
-    }
-  },
-
   mixins: [require("@/base"), require("./../modal")]
 };
 </script>

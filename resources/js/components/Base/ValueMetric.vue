@@ -1,17 +1,7 @@
 <template>
   <loading-card :loading="loading" class="px-6 py-4">
     <div class="flex mb-4">
-      <h3 class="mr-3 text-base text-80 font-bold">
-        <template v-if="url">
-          <router-link
-            tag="a"
-            :to="JSON.parse(url)"
-            :title="title"
-            class="cursor-pointer text-primary dim no-underline"
-          >{{ title }}</router-link>
-        </template>
-        <template v-else>{{ title }}</template>
-      </h3>
+      <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
       <button class="ml-auto text-80 btn btn-white" v-if="filters.length > 0" @click="openModal">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,6 +18,7 @@
           />
         </svg>
       </button>
+
       <div v-if="helpText" class="absolute pin-r pin-b p-2 z-50">
         <tooltip trigger="click">
           <icon
@@ -111,7 +102,6 @@ import ValueMetric from "@/components/Metrics/Base/ValueMetric";
 
 export default {
   extends: ValueMetric,
-
   mixins: [require("@/base"), require("./../modal")]
 };
 </script>

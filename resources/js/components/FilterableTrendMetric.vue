@@ -4,8 +4,8 @@
     :title="card.name"
     :help-text="card.helpText"
     :help-width="card.helpWidth"
-    :chart-data="data"
     :value="value"
+    :chart-data="data"
     :ranges="card.ranges"
     :format="format"
     :prefix="prefix"
@@ -15,13 +15,12 @@
     :loading="loading"
     :filters="card.filters"
     :selected-filters="selectedFilters"
-    :url="card.url"
   />
 </template>
 
 <script>
 import _ from "lodash";
-import { InteractsWithDates, Minimum } from "laravel-nova";
+import { Minimum } from "laravel-nova";
 import BaseTrendMetric from "./Base/TrendMetric";
 import TrendMetric from "@/components/Metrics/TrendMetric";
 
@@ -31,7 +30,6 @@ export default {
   components: {
     BaseTrendMetric
   },
-
   data: () => ({
     selectedFilters: {
       type: Object
@@ -92,7 +90,8 @@ export default {
     filterPayload() {
       const payload = {
         params: {
-          timezone: this.userTimezone
+          timezone: this.userTimezone,
+          twelveHourTime: this.usesTwelveHourTime,
         }
       };
 
