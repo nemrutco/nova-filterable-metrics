@@ -16,7 +16,6 @@
     :zero-result="zeroResult"
     :filters="card.filters"
     :selected-filters="selectedFilters"
-    :url="card.url"
   />
 </template>
 
@@ -24,10 +23,13 @@
 import { Minimum } from "laravel-nova";
 import BaseValueMetric from "./Base/ValueMetric";
 import ValueMetric from "@/components/Metrics/ValueMetric";
-import { isObject } from "util";
 
 export default {
   extends: ValueMetric,
+
+  components: {
+    BaseValueMetric
+  },
 
   data: () => ({
     selectedFilters: {
@@ -35,26 +37,19 @@ export default {
     }
   }),
 
-  components: {
-    BaseValueMetric
-  },
-
   methods: {
-    handleChange(payload) {
+    handleChange(key) {
       if (typeof payload !== "object") {
         this.selectedRangeKey = payload;
       } else {
         this.selectedFilters[payload.filter.class] = payload.selected;
       }
-
-      this.fetch();
     },
 
     fetch() {
       this.loading = true;
-      Minimum(
-        Nova.request().get(this.metricEndpoint, this.filterPayload())
-      ).then(
+
+      Minimum(Nova.request().get(this.metricEndpoint, this.filterPayload)).then(
         ({
           data: {
             value: {
@@ -79,6 +74,7 @@ export default {
         }
       );
     },
+
     filterPayload() {
       const payload = {
         params: {

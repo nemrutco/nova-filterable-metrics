@@ -8,8 +8,6 @@
     :loading="loading"
     :filters="card.filters"
     :selected-filters="selectedFilters"
-    :url="card.url"
-    :wrap="card.width === '1/3'"
   />
 </template>
 
@@ -24,7 +22,6 @@ export default {
   components: {
     BasePartitionMetric
   },
-
   data: () => ({
     selectedFilters: {
       type: Object
@@ -47,10 +44,16 @@ export default {
 
       Minimum(
         Nova.request().get(this.metricEndpoint, this.filterPayload())
-      ).then(({ data: { value: { value } } }) => {
-        this.chartData = value;
-        this.loading = false;
-      });
+      ).then(
+        ({
+          data: {
+            value: { value }
+          }
+        }) => {
+          this.chartData = value;
+          this.loading = false;
+        }
+      );
     },
 
     filterPayload() {

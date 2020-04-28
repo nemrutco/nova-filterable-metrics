@@ -1,33 +1,33 @@
 module.exports = {
-    props: {
-        filters: {
-            type: Object
-        },
-        selectedFilters: {
-            type: Object
-        },
-        url: {
-            type: Object
-        },
+  props: {
+    filters: {
+      type: Array
+    },
+    selectedFilters: {
+      type: Object
+    },
+    url: {
+      type: Object
+    },
+  },
+
+  data() {
+    return {
+      modalOpen: false
+    };
+  },
+
+  methods: {
+    openModal() {
+      this.modalOpen = true;
     },
 
-    data() {
-        return {
-            modalOpen: false
-        };
+    closeModal() {
+      this.modalOpen = false;
     },
 
-    methods: {
-        openModal() {
-            this.modalOpen = true;
-        },
-
-        closeModal() {
-            this.modalOpen = false;
-        },
-
-        selected(payload) {
-            this.$emit('selected', payload)
-        }
+    selected(payload) {
+      this.$emit('selected', payload)
     }
+  }
 }
