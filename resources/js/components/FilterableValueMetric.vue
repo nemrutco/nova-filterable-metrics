@@ -38,7 +38,7 @@ export default {
   }),
 
   methods: {
-    handleChange(key) {
+    handleChange(payload) {
       if (typeof payload !== "object") {
         this.selectedRangeKey = payload;
       } else {
