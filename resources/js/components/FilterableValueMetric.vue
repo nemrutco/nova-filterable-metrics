@@ -28,13 +28,13 @@ export default {
   extends: ValueMetric,
 
   components: {
-    BaseValueMetric
+    BaseValueMetric,
   },
 
   data: () => ({
     selectedFilters: {
-      type: Object
-    }
+      type: Object,
+    },
   }),
 
   methods: {
@@ -44,6 +44,8 @@ export default {
       } else {
         this.selectedFilters[payload.filter.class] = payload.selected;
       }
+
+      this.fetch();
     },
 
     fetch() {
@@ -59,9 +61,9 @@ export default {
               suffix,
               suffixInflection,
               format,
-              zeroResult
-            }
-          }
+              zeroResult,
+            },
+          },
         }) => {
           this.value = value;
           this.format = format || this.format;
@@ -78,22 +80,22 @@ export default {
     filterPayload() {
       const payload = {
         params: {
-          timezone: this.userTimezone
-        }
+          timezone: this.userTimezone,
+        },
       };
 
       if (this.hasRanges) {
         payload.params.range = this.selectedRangeKey;
       }
 
-      this.card.filters.forEach(filter => {
+      this.card.filters.forEach((filter) => {
         if (typeof this.selectedFilters[filter.class] !== "undefined") {
           payload.params[filter.class] = this.selectedFilters[filter.class];
         }
       });
 
       return payload;
-    }
-  }
+    },
+  },
 };
 </script>
