@@ -51,7 +51,9 @@ export default {
     fetch() {
       this.loading = true;
 
-      Minimum(Nova.request().get(this.metricEndpoint, this.filterPayload)).then(
+      Minimum(
+        Nova.request().get(this.metricEndpoint, this.filterPayload())
+      ).then(
         ({
           data: {
             value: {
