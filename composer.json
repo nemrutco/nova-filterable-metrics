@@ -1,37 +1,39 @@
 {
-    "name": "nemrutco/nova-filterable-metrics",
-    "description": "Filterable Laravel Nova Metrics.",
-    "keywords": [
-        "laravel",
-        "nova",
-        "filterable",
-        "metrics",
-        "card"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": ">=7.1.0",
-        "laravel/nova": ">=2.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Nemrutco\\Filterable\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Nemrutco\\Filterable\\CardServiceProvider"
-            ]
-        }
-    },
-    "repositories": [{
-        "type": "composer",
-        "url": "https://nova.laravel.com"
-    }],
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "nemrutco/nova-filterable-metrics",
+  "description": "Filterable Laravel Nova Metrics.",
+  "keywords": [
+    "laravel",
+    "nova",
+    "filterable",
+    "metrics",
+    "card"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1.0",
+    "laravel/nova": ">=3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nemrutco\\Filterable\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Nemrutco\\Filterable\\CardServiceProvider"
+      ]
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
