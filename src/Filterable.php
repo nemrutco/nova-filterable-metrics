@@ -3,12 +3,13 @@
 namespace Nemrutco\Filterable;
 
 use Illuminate\Database\Eloquent\Builder;
+use Nemrutco\Filterable\Concerns\AppliesDefaultFilters;
 
 trait Filterable
 {
     public function component()
     {
-        return 'filterable-' . $this->component;
+        return 'filterable-'.$this->component;
     }
 
     /**
@@ -22,12 +23,26 @@ trait Filterable
 
         $model = $model instanceof Builder ? $model : (new $model)->newQuery();
 
-        collect($this->filters())
-            ->filter(function ($filter, $value) use ($request) {
-                return $request->input(get_class($filter));
-            })->map(function ($filter) use ($request, $model) {
-                $model = $filter->apply($request, $model, $request->input(get_class($filter)));
+        $filters = collect($this->filters());
+
+        $filters->filter(static function ($filter) use ($request) {
+            return $request->input(get_class($filter));
+        })->map(static function ($filter) use ($request, $model) {
+            $model = $filter->apply($request, $model, $request->input(get_class($filter)));
+        });
+
+        if ($this instanceof AppliesDefaultFilters) {
+            $filters->reject(static function ($filter) use ($request) {
+                return $request->input(get_class($filter)) || blank($filter->default());
+            })->map(static function ($filter) {
+                return [
+                    'instance' => $filter,
+                    'default' => $filter->default(),
+                ];
+            })->where('default')->each(static function ($filter) use ($request, $model) {
+                $model = $filter['instance']->apply($request, $model, $filter['default']);
             });
+        }
 
         return $model;
     }
@@ -40,7 +55,7 @@ trait Filterable
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
-            'filters' => collect($this->filters() ?? [])->map(function ($filter) {
+            'filters' => collect($this->filters() ?? [])->map(static function ($filter) {
                 return $filter->jsonSerialize();
             })->values()->all(),
         ]);
