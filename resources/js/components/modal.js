@@ -1,13 +1,16 @@
 module.exports = {
   props: {
     filters: {
-      type: Array
+      type: Array,
+      default: () =>  []
     },
     selectedFilters: {
-      type: Object
+      type: Object,
+      default: () =>  {}
     },
     url: {
-      type: Object
+      type: Object,
+      default: () =>  {}
     },
   },
 
@@ -16,7 +19,6 @@ module.exports = {
       modalOpen: false
     };
   },
-
   methods: {
     openModal() {
       this.modalOpen = true;

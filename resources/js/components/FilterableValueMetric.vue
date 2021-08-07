@@ -31,12 +31,12 @@ export default {
     BaseValueMetric,
   },
 
-  data: () => ({
-    selectedFilters: {
-      type: Object,
-    },
-  }),
-
+  data() {
+    return {
+      selectedFilters: {},
+    };
+  },
+  
   methods: {
     handleChange(payload) {
       if (typeof payload !== "object") {
@@ -95,7 +95,6 @@ export default {
           payload.params[filter.class] = this.selectedFilters[filter.class];
         }
       });
-
       return payload;
     },
   },

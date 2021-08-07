@@ -5,21 +5,26 @@
         <heading
           :level="2"
           class="border-b border-40 py-8 px-8 text-90 font-normal text-xl"
-        >Filter "{{ title }}"</heading>
+          >Filter "{{ title }}"</heading
+        >
 
         <div class="py-6 action">
-          <div v-if="ranges && ranges.length > 0" class="flex border-b border-40">
+          <div
+            v-if="ranges && ranges.length > 0"
+            class="flex border-b border-40"
+          >
             <div class="w-1/5 px-8 py-6">
               <label
                 for="nova-time-range"
                 class="inline-block text-80 pt-2 leading-tight"
-              >Time Range</label>
+                >Time Range</label
+              >
             </div>
             <div class="py-6 px-8 w-1/2">
               <select
                 id="nova-time-range"
                 v-if="ranges.length > 0"
-                @change="handleChange(null,$event)"
+                @change="handleChange(null, $event)"
                 class="w-full form-control form-select"
               >
                 <option
@@ -27,16 +32,23 @@
                   :key="option.value"
                   :value="option.value"
                   :selected="selectedRangeKey == option.value"
-                >{{ option.label }}</option>
+                >
+                  {{ option.label }}
+                </option>
               </select>
             </div>
           </div>
-          <div v-for="filter in filters" :key="filter.value" class="flex border-b border-40">
+          <div
+            v-for="filter in filters"
+            :key="filter.value"
+            class="flex border-b border-40"
+          >
             <div class="w-1/5 px-8 py-6">
               <label
                 :for="filter.name"
                 class="inline-block text-80 pt-2 leading-tight"
-              >{{ filter.name }}</label>
+                >{{ filter.name }}</label
+              >
             </div>
             <div class="py-6 px-8 w-1/2">
               <date-time-picker
@@ -47,13 +59,14 @@
                 dusk="date-filter"
                 name="date-filter"
                 autocomplete="off"
-                :value="selectedFilters[filter.class]"
-                dateFormat="Y-m-d"
+                :value="selectedFilters[filter.class] || filter.currentValue"
+                alt-format="Y-m-d"
+                date-format="Y-m-d"
                 :placeholder="placeholder"
                 :enable-time="false"
                 :enable-seconds="false"
                 :first-day-of-week="firstDayOfWeek"
-                @input.prevent
+                @input.prevent=""
                 @change="handleChange(filter, $event)"
               />
               <input
@@ -71,12 +84,15 @@
                 @change="handleChange(filter, $event)"
                 class="w-full form-control form-select"
               >
+              <option value selected v-if="!filter.currentValue && filter.currentValue !== 0">&mdash;</option>
                 <option
                   v-for="option in filter.options"
                   :key="option.value"
                   :value="option.value"
                   :selected="option.value == selectedFilters[filter.class]"
-                >{{ option.name }}</option>
+                >
+                  {{ option.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -85,7 +101,11 @@
 
       <div class="bg-30 px-6 py-3 flex">
         <div class="flex items-center ml-auto">
-          <button @click.prevent="closeModal" type="submit" class="btn btn-default btn-primary">
+          <button
+            @click.prevent="closeModal"
+            type="submit"
+            class="btn btn-default btn-primary"
+          >
             <span>Save</span>
           </button>
         </div>
@@ -97,6 +117,11 @@
 export default {
   props: ["title", "ranges", "filters", "selectedRangeKey", "selectedFilters"],
 
+  computed: {
+    placeholder() {
+      return this.__("Choose date");
+    },
+  },
   methods: {
     inputClasses(inputType) {
       if (inputType !== "checkbox") {
@@ -111,12 +136,16 @@ export default {
     handleChange(filter, event) {
       if (filter === null) {
         this.$emit("selected", event.target.value);
+
         this.$toasted.show("Filtered Time Range", {
-          type: "success"
+          type: "success",
         });
+
         return;
       }
+
       let selected;
+
       if (filter.component.includes("date")) {
         selected = event;
       } else {
@@ -127,16 +156,17 @@ export default {
         selected = event.target.checked ? 1 : 0;
       }
 
-      if (selected !== "") {
+      if (this.selectedFilters[filter.class] !== selected) {
         this.$emit("selected", {
           filter,
-          selected
+          selected,
         });
+
         this.$toasted.show("Filtered " + filter.name, {
-          type: "success"
+          type: "success",
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>

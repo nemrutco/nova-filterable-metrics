@@ -22,11 +22,12 @@ export default {
   components: {
     BasePartitionMetric
   },
-  data: () => ({
-    selectedFilters: {
-      type: Object
-    }
-  }),
+
+  data() {
+    return {
+      selectedFilters: {},
+    };
+  },
 
   methods: {
     handleChange(payload) {

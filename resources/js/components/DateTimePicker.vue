@@ -5,8 +5,8 @@ export default {
   props: {
     mode: {
       type: String,
-      default: "single"
-    }
+      default: "single",
+    },
   },
 
   mounted() {
@@ -14,7 +14,7 @@ export default {
       this.$parent.filter.mode ? (this.mode = this.$parent.filter.mode) : "";
     } catch (e) {}
 
-    if (this.mode == "range") {
+    if (this.mode === "range") {
       this.placeholder = "Choose date range";
     }
 
@@ -22,15 +22,20 @@ export default {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
         enableTime: this.enableTime,
         enableSeconds: this.enableSeconds,
-        onClose: this.onChange,
+        onClose: this.onClose,
+        onChange: this.onChange,
         dateFormat: this.dateFormat,
+        altInput: true,
+        altFormat: this.altFormat,
         allowInput: true,
         // static: true,
         time_24hr: !this.twelveHourTime,
+        hourIncrement: this.hourIncrement,
+        minuteIncrement: this.minuteIncrement,
         locale: { firstDayOfWeek: this.firstDayOfWeek },
-        mode: this.mode
+        mode: this.mode,
       });
     });
-  }
+  },
 };
 </script>

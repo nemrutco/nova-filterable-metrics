@@ -13,6 +13,12 @@
         "php": ">=7.1.0",
         "laravel/nova": ">=2.0"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Nemrutco\\Filterable\\": "src/"
@@ -25,10 +31,6 @@
             ]
         }
     },
-    "repositories": [{
-        "type": "composer",
-        "url": "https://nova.laravel.com"
-    }],
     "config": {
         "sort-packages": true
     },

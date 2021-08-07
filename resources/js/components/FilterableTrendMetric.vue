@@ -30,11 +30,13 @@ export default {
   components: {
     BaseTrendMetric
   },
-  data: () => ({
-    selectedFilters: {
-      type: Object
-    }
-  }),
+
+  data() {
+    return {
+      selectedFilters: {},
+    };
+  },
+  
   methods: {
     handleChange(payload) {
       if (typeof payload !== "object") {

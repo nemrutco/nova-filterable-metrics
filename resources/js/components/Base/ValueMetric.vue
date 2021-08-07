@@ -102,6 +102,6 @@ import ValueMetric from "@/components/Metrics/Base/ValueMetric";
 
 export default {
   extends: ValueMetric,
-  mixins: [require("@/base"), require("./../modal")]
+  mixins: [require("../base"), require("./../modal")],
 };
 </script>
