@@ -17,7 +17,7 @@ export default {
     if (this.mode === "range") {
       this.placeholder = "Choose date range";
     }
-
+    
     this.$nextTick(() => {
       this.flatpickr = flatpickr(this.$refs.datePicker, {
         enableTime: this.enableTime,
@@ -34,6 +34,7 @@ export default {
         minuteIncrement: this.minuteIncrement,
         locale: { firstDayOfWeek: this.firstDayOfWeek },
         mode: this.mode,
+        defaultDate: this.mode ? this.value.split('to') : this.value
       });
     });
   },

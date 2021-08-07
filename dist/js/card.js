@@ -76341,7 +76341,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         hourIncrement: _this.hourIncrement,
         minuteIncrement: _this.minuteIncrement,
         locale: { firstDayOfWeek: _this.firstDayOfWeek },
-        mode: _this.mode
+        mode: _this.mode,
+        defaultDate: _this.mode ? _this.value.split('to') : _this.value
       });
     });
   }
