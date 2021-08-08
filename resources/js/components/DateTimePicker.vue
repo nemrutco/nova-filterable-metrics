@@ -34,7 +34,7 @@ export default {
         minuteIncrement: this.minuteIncrement,
         locale: { firstDayOfWeek: this.firstDayOfWeek },
         mode: this.mode,
-        defaultDate: this.mode ? this.value.split('to') : this.value
+        defaultDate: this.mode && this.value ? this.value.split('to') : this.value
       });
     });
   },

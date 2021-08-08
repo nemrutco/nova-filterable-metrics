@@ -31,19 +31,6 @@ trait Filterable
             $model = $filter->apply($request, $model, $request->input(get_class($filter)));
         });
 
-        if ($this instanceof AppliesDefaultFilters) {
-            $filters->reject(static function ($filter) use ($request) {
-                return $request->input(get_class($filter)) || blank($filter->default());
-            })->map(static function ($filter) {
-                return [
-                    'instance' => $filter,
-                    'default' => $filter->default(),
-                ];
-            })->where('default')->each(static function ($filter) use ($request, $model) {
-                $model = $filter['instance']->apply($request, $model, $filter['default']);
-            });
-        }
-
         return $model;
     }
 
