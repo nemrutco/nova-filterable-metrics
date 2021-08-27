@@ -86,7 +86,7 @@ In that case you don't need to use Nova's default `ranges`. Instead you can use 
 
 ## Credits
 - [Nemrut Creative Studio](https://github.com/nemrutco)
-- [Marcel Pociot](https://github.com/mpociot)
+- [Muzaffer Dede](https://github.com/MuzafferDede)
 - [All Contributors](../../contributors)
 
 ## License
