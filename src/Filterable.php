@@ -28,7 +28,9 @@ trait Filterable
         $filters->filter(static function ($filter) use ($request) {
             return $request->input(get_class($filter));
         })->map(static function ($filter) use ($request, $model) {
-            $model = $filter->apply($request, $model, $request->input(get_class($filter)));
+            $value = $request->input(get_class($filter));
+            $value = json_decode($value, true) ?? $value;
+            $model = $filter->apply($request, $model, $value);
         });
 
         return $model;

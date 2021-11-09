@@ -69,18 +69,21 @@
                 @input.prevent=""
                 @change="handleChange(filter, $event)"
               />
-              <input
-                :id="filter.name"
-                :class="inputClasses(filter.component)"
-                v-else-if="filter.component !== 'select-filter'"
-                @change="handleChange(filter, $event)"
-                :type="filter.component"
-                :checked="selectedFilters[filter.class] === 1"
-                :value="selectedFilters[filter.class]"
-              />
+              <template v-else-if="filter.component === 'boolean-filter'">
+                <checkbox-with-label
+                  class="m-2"
+                  :checked="selectedFilters[filter.class] && selectedFilters[filter.class][option.value]"
+                  :key="option.value"
+                  :name="option.value"
+                  @input="handleChange(filter, $event)"
+                  v-for="option in filter.options"
+                >
+                    {{ option.name }}
+                </checkbox-with-label>
+              </template>
               <select
                 :id="filter.name"
-                v-if="filter.component === 'select-filter'"
+                v-else-if="filter.component === 'select-filter'"
                 @change="handleChange(filter, $event)"
                 class="w-full form-control form-select"
               >
@@ -94,6 +97,15 @@
                   {{ option.name }}
                 </option>
               </select>
+              <input
+                :id="filter.name"
+                :class="inputClasses(filter.component)"
+                v-else
+                @change="handleChange(filter, $event)"
+                :type="filter.component"
+                :checked="selectedFilters[filter.class] === 1"
+                :value="selectedFilters[filter.class]"
+              />
             </div>
           </div>
         </div>
@@ -153,7 +165,10 @@ export default {
       }
 
       if (filter.component === "boolean-filter") {
-        selected = event.target.checked ? 1 : 0;
+        selected = this.selectedFilters[filter.class] ?
+            {...this.selectedFilters[filter.class]} :
+            Object.fromEntries(filter.options.map(o => [o.value, false]));
+        selected[event.target.name] = event.target.checked;
       }
 
       if (this.selectedFilters[filter.class] !== selected) {
