@@ -126,16 +126,8 @@
   </modal>
 </template>
 <script>
-
 export default {
-
   props: ["title", "ranges", "filters", "selectedRangeKey", "selectedFilters"],
-
-    data() {
-      return {
-          selected: null
-      }
-    },
 
   computed: {
     placeholder() {
@@ -177,7 +169,6 @@ export default {
             {...this.selectedFilters[filter.class]} :
             Object.fromEntries(filter.options.map(o => [o.value, false]));
         selected[event.target.name] = event.target.checked;
-        this.selected = selected;
       }
 
       if (this.selectedFilters[filter.class] !== selected) {
