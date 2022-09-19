@@ -58,10 +58,10 @@
 </template>
 
 <script>
-import TrendMetric from "@/components/Metrics/Base/TrendMetric";
+import BaseTrendMetric from "@/components/Metrics/Base/BaseTrendMetric";
 
 export default {
-  extends: TrendMetric,
+  extends: BaseTrendMetric,
   mixins: [require("../base"), require("./../modal")]
 };
 </script>

@@ -1,7 +1,14 @@
-Nova.booting((Vue, router, store) => {
-    Vue.component('filterable-modal', require('./components/FilterModal'));
-    Vue.component('date-time-picker', require('./components/DateTimePicker'));
-    Vue.component('filterable-value-metric', require('./components/FilterableValueMetric'));
-    Vue.component('filterable-trend-metric', require('./components/FilterableTrendMetric'));
-    Vue.component('filterable-partition-metric', require('./components/FilterablePartitionMetric'));
+import FilterableModal from './components/FilterModal';
+import FilterableValueMetric from "./components/FilterableValueMetric";
+import FilterablePartitionMetric from "./components/FilterablePartitionMetric";
+import FilterableTrendMetric from "./components/FilterableTrendMetric";
+
+Nova.booting((app, store) => {
+    // TODO: Fix date filter support
+    // Vue.component('date-time-picker', require('./components/DateTimePicker'));
+
+    app.component('filterable-modal', FilterableModal);
+    app.component('filterable-value-metric', FilterableValueMetric);
+    app.component('filterable-trend-metric', FilterableTrendMetric);
+    app.component('filterable-partition-metric', FilterablePartitionMetric);
 })

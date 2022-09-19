@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { Minimum } from "laravel-nova";
+import Minimum from "@/util/minimum.js";
 import BaseValueMetric from "./Base/ValueMetric";
 import ValueMetric from "@/components/Metrics/ValueMetric";
 
@@ -36,7 +36,7 @@ export default {
       selectedFilters: {},
     };
   },
-  
+
   methods: {
     handleChange(payload) {
       if (typeof payload !== "object") {

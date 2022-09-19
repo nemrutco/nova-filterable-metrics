@@ -98,10 +98,10 @@
 </template>
 
 <script>
-import ValueMetric from "@/components/Metrics/Base/ValueMetric";
+import BaseValueMetric from "@/components/Metrics/Base/BaseValueMetric";
 
 export default {
-  extends: ValueMetric,
+  extends: BaseValueMetric,
   mixins: [require("../base"), require("./../modal")],
 };
 </script>
