@@ -59,9 +59,11 @@
 
 <script>
 import BaseTrendMetric from "@/components/Metrics/Base/BaseTrendMetric";
+import { Localization } from 'laravel-nova';
+import Modal from "../modal";
 
 export default {
   extends: BaseTrendMetric,
-  mixins: [require("../base"), require("./../modal")]
+  mixins: [Localization, Modal]
 };
 </script>

@@ -99,9 +99,11 @@
 
 <script>
 import BaseValueMetric from "@/components/Metrics/Base/BaseValueMetric";
+import { Localization } from 'laravel-nova';
+import Modal from "../modal";
 
 export default {
   extends: BaseValueMetric,
-  mixins: [require("../base"), require("./../modal")],
+  mixins: [Localization, Modal],
 };
 </script>

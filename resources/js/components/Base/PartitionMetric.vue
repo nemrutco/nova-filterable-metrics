@@ -65,11 +65,11 @@
 
 <script>
 import BasePartitionMetric from "@/components/Metrics/Base/BasePartitionMetric";
-import Base from "../base";
 import Modal from "../modal";
+import { Localization } from 'laravel-nova';
 
 export default {
   extends: BasePartitionMetric,
-  mixins: [Base, Modal]
+  mixins: [ Localization , Modal]
 };
 </script>

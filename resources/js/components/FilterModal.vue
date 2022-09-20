@@ -39,7 +39,7 @@
             :key="filter.value"
             class="flex"
           >
-            <div class="w-1/5 pr-6 py-3">
+            <div class="w-1/5 pr-0 py-3">
               <label
                 :for="filter.name"
                 class="inline-block text-80 pt-2 leading-tight"
@@ -47,54 +47,44 @@
               >
             </div>
             <div class="py-3 px-8 w-4/5">
-                <!--TODO: Fix datepicker support  -->
-                <!-- date-time-picker
-                    :id="filter.name"
-                    :mode="filter.mode"
-                    v-if="filter.component.includes('date')"
-                    class="w-full form-control form-input form-input-bordered"
-                    dusk="date-filter"
+                <input
+                    class="w-full flex form-control form-control-sm form-input form-input-bordered"
+                    type="date"
+                    ref="dateTimePicker"
+                    v-if="filter.component.includes('date-filter')"
+                    :dusk="`${filter.name}-date-filter`"
                     name="date-filter"
                     autocomplete="off"
                     :value="selectedFilters[filter.class] || filter.currentValue"
-                    alt-format="Y-m-d"
-                    date-format="Y-m-d"
                     :placeholder="placeholder"
-                    :enable-time="false"
-                    :enable-seconds="false"
-                    :first-day-of-week="firstDayOfWeek"
-                    @input.prevent=""
                     @change="handleChange(filter, $event)"
-                / -->
-
-                <!-- TODO: If datepicker supported -->
-                <!-- v-else-if="filter.component !== 'select-filter'" -->
-              <input
-                :id="filter.name"
-                :class="inputClasses(filter.component)"
-                v-if="filter.component !== 'select-filter'"
-                @change="handleChange(filter, $event)"
-                :type="filter.component"
-                :checked="selectedFilters[filter.class] === 1"
-                :value="selectedFilters[filter.class]"
-              />
-              <select
-                :id="filter.name"
-                v-if="filter.component === 'select-filter'"
-                @change="handleChange(filter, $event)"
-                class="w-full form-control form-select form-select-bordered"
-                style="appearance: auto;"
-              >
-              <option value selected v-if="!filter.currentValue && filter.currentValue !== 0">{{ __('Choose') }}</option>
-                <option
-                  v-for="option in filter.options"
-                  :key="option.value"
-                  :value="option.value"
-                  :selected="option.value == selectedFilters[filter.class]"
+                />
+                <input
+                    :id="filter.name"
+                    :class="inputClasses(filter.component)"
+                    v-else-if="filter.component !== 'select-filter'"
+                    @change="handleChange(filter, $event)"
+                    :type="filter.component"
+                    :checked="selectedFilters[filter.class] === 1"
+                    :value="selectedFilters[filter.class]"
+                />
+                <select
+                    :id="filter.name"
+                    v-if="filter.component === 'select-filter'"
+                    @change="handleChange(filter, $event)"
+                    class="w-full form-control form-select form-select-bordered"
+                    style="appearance: auto;"
                 >
-                  {{ option.label }}
-                </option>
-              </select>
+                    <option value selected v-if="!filter.currentValue && filter.currentValue !== 0">{{ __('Choose') }}</option>
+                    <option
+                      v-for="option in filter.options"
+                      :key="option.value"
+                      :value="option.value"
+                      :selected="option.value == selectedFilters[filter.class]"
+                    >
+                      {{ option.label }}
+                    </option>
+                </select>
             </div>
           </div>
         </ModalContent>
@@ -146,8 +136,8 @@ export default {
 
       let selected;
 
-      if (filter.component.includes("date")) {
-        selected = event;
+      if (filter.component.includes("date-filter")) {
+        selected = event?.target?.value ?? event;
       } else {
         selected = event.target.value;
       }
