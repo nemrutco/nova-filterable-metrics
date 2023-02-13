@@ -20,7 +20,7 @@
 
 <script>
 import _ from "lodash";
-import { Minimum } from "laravel-nova";
+import Minimum from "@/util/minimum.js";
 import BaseTrendMetric from "./Base/TrendMetric";
 import TrendMetric from "@/components/Metrics/TrendMetric";
 
@@ -36,7 +36,7 @@ export default {
       selectedFilters: {},
     };
   },
-  
+
   methods: {
     handleChange(payload) {
       if (typeof payload !== "object") {

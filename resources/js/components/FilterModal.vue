@@ -1,14 +1,10 @@
 <template>
-  <modal class="modal" tabindex="-1" role="dialog">
+  <Modal :show="openModal" class="modal"  tabindex="-1" role="dialog">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden w-action-fields">
-      <div>
-        <heading
-          :level="2"
-          class="border-b border-40 py-8 px-8 text-90 font-normal text-xl"
-          >Filter "{{ title }}"</heading
-        >
-
-        <div class="py-6 action">
+        <ModalHeader>
+            Filter: {{ title }}
+        </ModalHeader>
+        <ModalContent>
           <div
             v-if="ranges && ranges.length > 0"
             class="flex border-b border-40"
@@ -41,81 +37,73 @@
           <div
             v-for="filter in filters"
             :key="filter.value"
-            class="flex border-b border-40"
+            class="flex"
           >
-            <div class="w-1/5 px-8 py-6">
+            <div class="w-1/5 pr-0 py-3">
               <label
                 :for="filter.name"
                 class="inline-block text-80 pt-2 leading-tight"
                 >{{ filter.name }}</label
               >
             </div>
-            <div class="py-6 px-8 w-1/2">
-              <date-time-picker
-                :id="filter.name"
-                :mode="filter.mode"
-                v-if="filter.component.includes('date')"
-                class="w-full form-control form-input form-input-bordered"
-                dusk="date-filter"
-                name="date-filter"
-                autocomplete="off"
-                :value="selectedFilters[filter.class] || filter.currentValue"
-                alt-format="Y-m-d"
-                date-format="Y-m-d"
-                :placeholder="placeholder"
-                :enable-time="false"
-                :enable-seconds="false"
-                :first-day-of-week="firstDayOfWeek"
-                @input.prevent=""
-                @change="handleChange(filter, $event)"
-              />
-              <input
-                :id="filter.name"
-                :class="inputClasses(filter.component)"
-                v-else-if="filter.component !== 'select-filter'"
-                @change="handleChange(filter, $event)"
-                :type="filter.component"
-                :checked="selectedFilters[filter.class] === 1"
-                :value="selectedFilters[filter.class]"
-              />
-              <select
-                :id="filter.name"
-                v-if="filter.component === 'select-filter'"
-                @change="handleChange(filter, $event)"
-                class="w-full form-control form-select"
-              >
-              <option value selected v-if="!filter.currentValue && filter.currentValue !== 0">&mdash;</option>
-                <option
-                  v-for="option in filter.options"
-                  :key="option.value"
-                  :value="option.value"
-                  :selected="option.value == selectedFilters[filter.class]"
+            <div class="py-3 px-8 w-4/5">
+                <input
+                    class="w-full flex form-control form-control-sm form-input form-input-bordered"
+                    type="date"
+                    ref="dateTimePicker"
+                    v-if="filter.component.includes('date-filter')"
+                    :dusk="`${filter.name}-date-filter`"
+                    name="date-filter"
+                    autocomplete="off"
+                    :value="selectedFilters[filter.class] || filter.currentValue"
+                    :placeholder="placeholder"
+                    @change="handleChange(filter, $event)"
+                />
+                <input
+                    :id="filter.name"
+                    :class="inputClasses(filter.component)"
+                    v-else-if="filter.component !== 'select-filter'"
+                    @change="handleChange(filter, $event)"
+                    :type="filter.component"
+                    :checked="selectedFilters[filter.class] === 1"
+                    :value="selectedFilters[filter.class]"
+                />
+                <select
+                    :id="filter.name"
+                    v-if="filter.component === 'select-filter'"
+                    @change="handleChange(filter, $event)"
+                    class="w-full form-control form-select form-select-bordered"
+                    style="appearance: auto;"
                 >
-                  {{ option.name }}
-                </option>
-              </select>
+                    <option value selected v-if="!filter.currentValue && filter.currentValue !== 0">{{ __('Choose') }}</option>
+                    <option
+                      v-for="option in filter.options"
+                      :key="option.value"
+                      :value="option.value"
+                      :selected="option.value == selectedFilters[filter.class]"
+                    >
+                      {{ option.label }}
+                    </option>
+                </select>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="bg-30 px-6 py-3 flex">
-        <div class="flex items-center ml-auto">
-          <button
-            @click.prevent="closeModal"
-            type="submit"
-            class="btn btn-default btn-primary"
-          >
-            <span>Save</span>
-          </button>
-        </div>
-      </div>
+        </ModalContent>
+        <ModalFooter>
+            <div class="ml-auto">
+                <DefaultButton
+                    @click.prevent="closeModal"
+                    type="submit"
+                >
+                    {{ __('Close') }}
+                </DefaultButton>
+            </div>
+        </ModalFooter>
     </div>
-  </modal>
+  </Modal>
 </template>
 <script>
 export default {
-  props: ["title", "ranges", "filters", "selectedRangeKey", "selectedFilters"],
+  props: ["title", "ranges", "filters", "selectedRangeKey", "selectedFilters", "show"],
 
   computed: {
     placeholder() {
@@ -133,21 +121,23 @@ export default {
       this.$emit("closeModal");
     },
 
+    openModal() {
+      this.$emit("openModal");
+    },
+
     handleChange(filter, event) {
       if (filter === null) {
         this.$emit("selected", event.target.value);
 
-        this.$toasted.show("Filtered Time Range", {
-          type: "success",
-        });
+        Nova.success("Filtered Time Range");
 
         return;
       }
 
       let selected;
 
-      if (filter.component.includes("date")) {
-        selected = event;
+      if (filter.component.includes("date-filter")) {
+        selected = event?.target?.value ?? event;
       } else {
         selected = event.target.value;
       }
@@ -162,9 +152,7 @@ export default {
           selected,
         });
 
-        this.$toasted.show("Filtered " + filter.name, {
-          type: "success",
-        });
+        Nova.success("Filtered " + filter.name);
       }
     },
   },

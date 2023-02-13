@@ -98,10 +98,12 @@
 </template>
 
 <script>
-import ValueMetric from "@/components/Metrics/Base/ValueMetric";
+import BaseValueMetric from "@/components/Metrics/Base/BaseValueMetric";
+import { Localization } from 'laravel-nova';
+import Modal from "../modal";
 
 export default {
-  extends: ValueMetric,
-  mixins: [require("../base"), require("./../modal")],
+  extends: BaseValueMetric,
+  mixins: [Localization, Modal],
 };
 </script>

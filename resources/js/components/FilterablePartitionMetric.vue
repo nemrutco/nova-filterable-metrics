@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { Minimum } from "laravel-nova";
+import Minimum from "@/util/minimum.js";
 import BasePartitionMetric from "./Base/PartitionMetric";
 import PartitionMetric from "@/components/Metrics/PartitionMetric";
 
@@ -60,15 +60,21 @@ export default {
     filterPayload() {
       const payload = {
         params: {
-          timezone: this.userTimezone
+          timezone: this.userTimezone,
+          filter: '',
         }
       };
+
+      const filters = [];
 
       this.card.filters.forEach(filter => {
         if (typeof this.selectedFilters[filter.class] !== "undefined") {
           payload.params[filter.class] = this.selectedFilters[filter.class];
+          filters.push(this.selectedFilters[filter.class]);
         }
       });
+
+      payload.params['filter']  = filters.join('#');
 
       return payload;
     }
