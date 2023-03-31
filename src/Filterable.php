@@ -3,7 +3,6 @@
 namespace Nemrutco\Filterable;
 
 use Illuminate\Database\Eloquent\Builder;
-use Nemrutco\Filterable\Concerns\AppliesDefaultFilters;
 
 trait Filterable
 {
@@ -39,7 +38,7 @@ trait Filterable
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             'filters' => collect($this->filters() ?? [])->map(static function ($filter) {

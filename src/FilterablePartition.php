@@ -9,7 +9,7 @@ trait FilterablePartition
     /**
      * Return a partition result showing the segments of a aggregate.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $function
      * @param  string  $column

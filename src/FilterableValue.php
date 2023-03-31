@@ -9,7 +9,7 @@ trait FilterableValue
     /**
      * Return a value result showing the growth of a model over a given time frame.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $function
      * @param  string|null  $column

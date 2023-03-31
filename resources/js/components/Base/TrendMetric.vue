@@ -58,10 +58,12 @@
 </template>
 
 <script>
-import TrendMetric from "@/components/Metrics/Base/TrendMetric";
+import BaseTrendMetric from "@/components/Metrics/Base/BaseTrendMetric";
+import { Localization } from 'laravel-nova';
+import Modal from "../modal";
 
 export default {
-  extends: TrendMetric,
-  mixins: [require("../base"), require("./../modal")]
+  extends: BaseTrendMetric,
+  mixins: [Localization, Modal]
 };
 </script>
