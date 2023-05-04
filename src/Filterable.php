@@ -25,9 +25,9 @@ trait Filterable
         $filters = collect($this->filters());
 
         $filters->filter(static function ($filter) use ($request) {
-            return $request->input(get_class($filter));
+            return $request->input($filter->key()) ?: $filter->default();
         })->map(static function ($filter) use ($request, $model) {
-            $model = $filter->apply($request, $model, $request->input(get_class($filter)));
+            $model = $filter->apply($request, $model, $request->input($filter->key()) ?: $filter->default());
         });
 
         return $model;
